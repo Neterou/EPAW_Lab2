@@ -46,3 +46,6 @@ EXTERNAL_RESOURCES/images/*
 
 # Jasper JSP Compiler Output
 jsp/
+
+src/main/webapp/WEB-INF/*
+BubbleNet_Seminar1_Report.pdf

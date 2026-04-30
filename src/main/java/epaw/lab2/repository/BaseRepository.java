@@ -2,11 +2,17 @@ package epaw.lab2.repository;
 
 import epaw.lab2.util.DBManager;
 
-public abstract class BaseRepository {
-	
-	protected DBManager db;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-    protected BaseRepository() {
-    	this.db = DBManager.getInstance();
+/**
+ * Base class for all repositories.
+ * Provides the shared helper to obtain the current DB connection.
+ */
+public abstract class BaseRepository {
+
+    /** Convenience accessor so subclasses never call DBManager directly. */
+    protected Connection conn() throws SQLException {
+        return DBManager.getInstance().getConnection();
     }
 }
