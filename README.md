@@ -20,6 +20,10 @@ Si ets alumne de l'assignatura, hem preparat una guia detallada que t'explicarà
    ```
 3. **Accedeix a l'aplicació**:
    Obre el teu navegador a [http://localhost:8080](http://localhost:8080)
+4. **Base de dades SQLite**:
+   L'aplicació utilitza SQLite integrat i crea el fitxer repo-local `src/main/webapp/WEB-INF/users.db` quan s'executa.
+   Això garanteix que la base de dades es troba dins del projecte i no en un directori temporal aleatori.
+   Pots obrir el fitxer amb un client SQLite per comprovar les dades registrades.
 
 ---
 
