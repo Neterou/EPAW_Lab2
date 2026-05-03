@@ -65,15 +65,20 @@
                 </p>
 
                 <p>
-                    <label class="w3-text-grey">Ciutat</label>
-                    <input class="w3-input w3-border" type="text" id="city" name="city" required
-                        value="${user.city}" title="Introdueix la teva ciutat." />
+                    <label class="w3-text-grey">País</label>
+                    <select class="w3-select w3-border" id="country" name="country" required>
+                        <option value="">Selecciona país</option>
+                        <option value="ES">ES</option>
+                        <option value="US">US</option>
+                        <option value="FR">FR</option>
+                    </select>
                 </p>
 
                 <p>
-                    <label class="w3-text-grey">País</label>
-                    <input class="w3-input w3-border" type="text" id="country" name="country" required maxlength="2"
-                        pattern="[A-Za-z]{2}" value="${user.country}" title="Codi ISO 3166-1 alpha-2 de 2 lletres (per exemple, ES, GB, US)." />
+                    <label class="w3-text-grey">Ciutat</label>
+                    <select class="w3-select w3-border" id="city" name="city" required>
+                        <option value="">Selecciona ciutat</option>
+                    </select>
                 </p>
 
                 <p>
@@ -119,6 +124,40 @@
                 "${error.key}": "${error.value}",
             </c:forEach>
         };
+
+        // Ciudades por país
+        const citiesByCountry = {
+            ES: ['Barcelona', 'Madrid', 'Valencia', 'Sevilla', 'Zaragoza', 'Málaga', 'Murcia', 'Palma', 'Bilbao', 'Alicante', 'Córdoba', 'Valladolid', 'Vigo', 'Gijón', 'Hospitalet de Llobregat', 'La Coruña', 'Granada', 'Vitoria-Gasteiz', 'Elche', 'Oviedo', 'Santander', 'Jerez de la Frontera', 'Pamplona', 'Almería', 'Salamanca', 'Albacete', 'Getafe', 'Burgos', 'Badalona', 'Sabadell', 'Cartagena', 'Terrassa', 'Jerez', 'Castellón de la Plana', 'Alcorcón', 'León', 'Badajoz', 'Logroño', 'Santa Cruz de Tenerife', 'Tarragona', 'Lleida', 'Marbella', 'Mataró', 'Dos Hermanas', 'Parla'],
+            US: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin', 'Jacksonville', 'Fort Worth', 'Columbus', 'Charlotte', 'San Francisco', 'Indianapolis', 'Seattle', 'Denver', 'Boston'],
+            FR: ['Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice', 'Nantes', 'Strasbourg', 'Montpellier', 'Bordeaux', 'Lille', 'Rennes', 'Reims', 'Le Havre', 'Saint-Étienne', 'Toulon', 'Grenoble', 'Dijon', 'Angers', 'Nîmes', 'Villeurbanne']
+        };
+
+        const countrySelect = document.getElementById('country');
+        const citySelect = document.getElementById('city');
+
+        function updateCities() {
+            const selectedCountry = countrySelect.value;
+            citySelect.innerHTML = '<option value="">Selecciona ciutat</option>';
+            if (citiesByCountry[selectedCountry]) {
+                citiesByCountry[selectedCountry].forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        }
+
+        countrySelect.addEventListener('change', updateCities);
+
+        // Inicializar si hay valores previos
+        <c:if test="${not empty user.country}">
+            countrySelect.value = '${user.country}';
+            updateCities();
+            <c:if test="${not empty user.city}">
+                citySelect.value = '${user.city}';
+            </c:if>
+        </c:if>
     </script>
     <script src="js/validation.js"></script>
 
